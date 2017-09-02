@@ -102,6 +102,12 @@ export default {
 
       this.moveY = ((wrap.scrollTop * 100) / wrap.clientHeight);
       this.moveX = ((wrap.scrollLeft * 100) / wrap.clientWidth);
+
+      //滚动到底部
+      if(wrap.scrollTop + wrap.offsetHeight >= wrap.scrollHeight){
+        this.$emit('scrollbottom',wrap);
+      }
+      
     },
 
     update() {

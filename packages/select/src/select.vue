@@ -76,6 +76,7 @@
           wrap-class="el-select-dropdown__wrap"
           view-class="el-select-dropdown__list"
           :class="{ 'is-empty': !allowCreate && filteredOptionsCount === 0 }"
+          @scrollbottom="handleScrollBottom"
           v-show="options.length > 0 && !loading">
           <el-option
             :value="query"
@@ -184,6 +185,7 @@
       noDataText: String,
       remoteMethod: Function,
       filterMethod: Function,
+      scrollBottomHandle: Function,
       multiple: Boolean,
       multipleLimit: {
         type: Number,
@@ -617,6 +619,9 @@
       onInputChange() {
         if (this.filterable) {
           this.query = this.selectedLabel;
+          if (this.query) {
+            this.visible = true;
+          }
         }
       },
 
@@ -666,7 +671,14 @@
         } else {
           return getValueByPath(item.value, this.valueKey);
         }
+      },
+
+      handleScrollBottom(wrap) {
+        if (this.scrollBottomHandle) {
+          this.scrollBottomHandle(wrap);
+        }
       }
+
     },
 
     created() {
